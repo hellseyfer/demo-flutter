@@ -250,9 +250,13 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final style = theme.textTheme.displaySmall!.copyWith(
-        // Calling copyWith() on displayMedium returns a copy of the text style with the specified changes.
-        color: theme.colorScheme.onPrimary);
+    final style = isSmall
+        ? theme.textTheme.titleLarge!.copyWith(
+            // Calling copyWith() on displayMedium returns a copy of the text style with the specified changes.
+            color: theme.colorScheme.onPrimary)
+        : theme.textTheme.displaySmall!.copyWith(
+            // Calling copyWith() on displayMedium returns a copy of the text style with the specified changes.
+            color: theme.colorScheme.onPrimary);
 
     return Card(
       color: theme.colorScheme.primary,
@@ -265,10 +269,7 @@ class CardWidget extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                SizedBox(
-                    height: isSmall ? 100 : 200,
-                    width: isSmall ? 200 : 300,
-                    child: Image.network(hero.imageURL)),
+                Expanded(child: Image.network(hero.imageURL)),
                 Text(
                   hero.name.asLowerCase,
                   style: style,
